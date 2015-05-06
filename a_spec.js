@@ -17,11 +17,10 @@ describe('a', function () {
 
   it('should annotate classes', function () {
     register('RouteConfig', RouteConfig);
-    function MyCtrl () {};
 
-    a.RouteConfig([
+    var MyCtrl = a.RouteConfig([
       { path: '/', component: 'Foo'}
-    ]).for(MyCtrl);
+    ]).for(function() {});
 
     expect(MyCtrl.annotations).toBeDefined();
     expect(MyCtrl.annotations.length).toBe(1);
@@ -32,14 +31,13 @@ describe('a', function () {
     register('RouteConfig', RouteConfig);
     register('View', View);
 
-    a.RouteConfig([
+    var MyCtrl = a.RouteConfig([
       { path: '/', component: 'Foo'}
     ]).
     View({
       template: 'my.html'
     }).
-    for(MyCtrl);
-    function MyCtrl () {};
+    for(function() {});
 
     expect(MyCtrl.annotations.length).toBe(2);
     expect(MyCtrl.annotations[0] instanceof RouteConfig).toBe(true);

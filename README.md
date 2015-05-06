@@ -7,14 +7,14 @@ Annotator for ES5. Lets you write ES5 with TypeScript-like annotations.
 This JS code:
 
 ```js
+var MyController =
 a.RouteConfig([
   { path: '/' }
 ]).
 View({
   template: '...'
 }).
-for(MyController)
-function MyController () {}
+for(function() {})
 ```
 
 Is the same as this TypeScript code:
