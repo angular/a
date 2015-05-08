@@ -2,11 +2,13 @@ var createInstance = require('./a');
 
 describe('a', function () {
   var register,
+      registerFactory,
       a;
 
   beforeEach(function () {
     var obj = createInstance();
     register = obj.register;
+    registerFactory = obj.registerFactory;
     a = obj.annotator;
   });
 
@@ -59,6 +61,17 @@ describe('a', function () {
     expect(MyCtrl.prototype.myHook.annotations[0] instanceof CanActivate).toBe(true);
   });
 
+  it('should allow registering factories', function () {
+    registerFactory('inject', function (SomeClass, args) {
+      SomeClass.parameters = [Array.prototype.slice.call(args, 0)];
+    });
+
+    a.inject(Service).for(MyCtrl);
+    function MyCtrl (service) {}
+
+    expect(MyCtrl.parameters).toEqual([[Service]]);
+  });
+
   it('should return the target of the annotation', function () {
     register('CanActivate', CanActivate);
     function MyCtrl () {};
@@ -66,7 +79,9 @@ describe('a', function () {
     expect(a.CanActivate(MyCtrl.prototype.myHook = methodImpl)).toBe(methodImpl);
   });
 
-  //TODO: throw when there's more than one
+  //TODO: throw when there's more than one "for"
+
+  //TODO: throw when there's no "for" block for a chained context
 
   function RouteConfig(config) {
     this.config = config;
@@ -75,4 +90,5 @@ describe('a', function () {
     this.config = config;
   }
   function CanActivate() {}
+  function Service() {}
 });
