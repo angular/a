@@ -2,6 +2,10 @@
 
 Annotator for ES5. Lets you write ES5 with TypeScript-like annotations.
 
+## Disclaimer
+This library is super experimental. Like winter, changes are coming.
+
+
 ## Use
 
 This JS code:
